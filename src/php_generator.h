@@ -136,6 +136,17 @@ class PHPFileGenerator {
     return ClassName(message);
   }
 
+  string FullEnumClassName(const EnumDescriptor& message) {
+    const FileDescriptor & file( Deref(message.file()) );
+
+    // Remove the package name if it exists
+    if (UseNamespaces() && !file.package().empty()) {
+      return "\\" + NamespaceName(file) + "\\" + ClassName(message);
+    }
+
+    return ClassName(message);
+  }
+
   void TypeHintingFieldVariables(const FieldDescriptor &field, map<string, string> &variables);
   void FieldVariables(const FieldDescriptor &field, map<string, string> &variables);
   void FieldVariables(const OneofDescriptor &oneof, map<string, string> &variables);

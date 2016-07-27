@@ -46,7 +46,7 @@ string PHPFileGenerator::DefaultValueAsString(const FieldDescriptor &field) {
       return "\"" + PHPEscape(field.default_value_string()) + "\"";
 
     case FieldDescriptor::CPPTYPE_ENUM:
-      return FullClassName(*field.enum_type()) + "::" + field.default_value_enum()->name();
+      return FullEnumClassName(Deref(field.enum_type())) + "::" + field.default_value_enum()->name();
 
     case FieldDescriptor::CPPTYPE_MESSAGE:
       return "null";
@@ -76,7 +76,7 @@ void PHPFileGenerator::FieldVariables(const OneofDescriptor &oneof,
     variables["oneof_case_return_type"] = "";
     variables["bool_return_type"] = "";
   }
-  
+
 }
 
 void PHPFileGenerator::TypeHintingFieldVariables(const FieldDescriptor &field,
@@ -205,7 +205,7 @@ bool PHPFileGenerator::Generate(string* error) {
         "  use ProtobufEnum;\n"
         "  use ProtobufMessage;\n\n",
 
-        "namespace", NamespaceName(file_).c_str()); 
+        "namespace", NamespaceName(file_).c_str());
       printer_.Indent();
     }
 
