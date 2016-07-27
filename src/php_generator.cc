@@ -46,7 +46,7 @@ string PHPFileGenerator::DefaultValueAsString(const FieldDescriptor &field) {
       return "\"" + PHPEscape(field.default_value_string()) + "\"";
 
     case FieldDescriptor::CPPTYPE_ENUM:
-      return ClassName(*field.enum_type()) + "::" + field.default_value_enum()->name();
+      return FullClassName(*field.enum_type()) + "::" + field.default_value_enum()->name();
 
     case FieldDescriptor::CPPTYPE_MESSAGE:
       return "null";
